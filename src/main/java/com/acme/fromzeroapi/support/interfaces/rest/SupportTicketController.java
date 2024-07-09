@@ -1,7 +1,5 @@
 package com.acme.fromzeroapi.support.interfaces.rest;
 
-import com.acme.fromzeroapi.projects.domain.model.queries.GetAllProjectsQuery;
-import com.acme.fromzeroapi.support.domain.model.aggregates.SupportTicket;
 import com.acme.fromzeroapi.support.domain.model.query.GetAllSupportTicketQuery;
 import com.acme.fromzeroapi.support.domain.model.query.GetSupportTicketByIdQuery;
 import com.acme.fromzeroapi.support.domain.services.SupportTicketCommandService;
@@ -10,7 +8,7 @@ import com.acme.fromzeroapi.support.interfaces.rest.resources.CreateSupportTicke
 import com.acme.fromzeroapi.support.interfaces.rest.resources.SupportTicketResource;
 import com.acme.fromzeroapi.support.interfaces.rest.transform.CreateSupportTicketCommandFromResourceAsembler;
 import com.acme.fromzeroapi.support.interfaces.rest.transform.SupportTicketResourceFromEntityAssembler;
-import com.acme.fromzeroapi.usermanagement.interfaces.acl.IamContextFacade;
+import com.acme.fromzeroapi.iam.interfaces.acl.IamContextFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;

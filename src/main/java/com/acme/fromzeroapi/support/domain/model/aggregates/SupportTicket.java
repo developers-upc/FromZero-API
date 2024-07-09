@@ -1,7 +1,7 @@
 package com.acme.fromzeroapi.support.domain.model.aggregates;
 
 import com.acme.fromzeroapi.support.domain.model.commands.CreateSupportTicketCommand;
-import com.acme.fromzeroapi.usermanagement.domain.model.aggregates.User;
+import com.acme.fromzeroapi.iam.domain.model.aggregates.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 

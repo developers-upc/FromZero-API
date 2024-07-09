@@ -4,8 +4,6 @@ import com.acme.fromzeroapi.projects.domain.model.aggregates.Framework;
 import com.acme.fromzeroapi.projects.domain.model.aggregates.ProgrammingLanguage;
 import com.acme.fromzeroapi.projects.infrastructure.persistence.jpa.repositories.FrameworksRepository;
 import com.acme.fromzeroapi.projects.infrastructure.persistence.jpa.repositories.ProgrammingLanguagesRepository;
-import com.acme.fromzeroapi.usermanagement.domain.model.aggregates.User;
-import com.acme.fromzeroapi.usermanagement.infraestructure.persistence.jpa.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +21,7 @@ public class FromZeroApiApplication {
 		SpringApplication.run(FromZeroApiApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
@@ -32,9 +30,9 @@ public class FromZeroApiApplication {
 						.allowedMethods("*").allowedHeaders("*");
 			}
 		};
-	}
+	}*/
 
-	/*@Bean
+	@Bean
 	CommandLineRunner runner(ProgrammingLanguagesRepository languagesRepository,
 							 FrameworksRepository frameworksRepository){
 		return (String... args)->{
@@ -52,5 +50,5 @@ public class FromZeroApiApplication {
 			languagesRepository.saveAll(languageList);
 			frameworksRepository.saveAll(frameworksList);
 		};
-	}*/
+	}
 }

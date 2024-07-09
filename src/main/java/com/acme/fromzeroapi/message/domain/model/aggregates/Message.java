@@ -1,12 +1,11 @@
 package com.acme.fromzeroapi.message.domain.model.aggregates;
 
 import com.acme.fromzeroapi.message.domain.model.commands.CreateMessageCommand;
-import com.acme.fromzeroapi.usermanagement.domain.model.aggregates.User;
+import com.acme.fromzeroapi.iam.domain.model.aggregates.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Getter
 @Entity

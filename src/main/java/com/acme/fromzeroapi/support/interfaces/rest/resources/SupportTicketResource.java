@@ -1,6 +1,6 @@
 package com.acme.fromzeroapi.support.interfaces.rest.resources;
 
-import com.acme.fromzeroapi.usermanagement.domain.model.aggregates.User;
+import com.acme.fromzeroapi.iam.domain.model.aggregates.User;
 
 import java.time.LocalDate;
 

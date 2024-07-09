@@ -7,7 +7,7 @@ import com.acme.fromzeroapi.message.interfaces.rest.resources.CreateMessageResou
 import com.acme.fromzeroapi.message.interfaces.rest.resources.MessageResource;
 import com.acme.fromzeroapi.message.interfaces.rest.transform.CreateMessageCommandFromResourceAssembler;
 import com.acme.fromzeroapi.message.interfaces.rest.transform.MessageResourceFromEntityAssembler;
-import com.acme.fromzeroapi.usermanagement.interfaces.acl.IamContextFacade;
+import com.acme.fromzeroapi.iam.interfaces.acl.IamContextFacade;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

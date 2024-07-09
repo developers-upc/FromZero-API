@@ -16,7 +16,7 @@ import com.acme.fromzeroapi.deliverables.interfaces.rest.transform.CreateDeliver
 import com.acme.fromzeroapi.deliverables.interfaces.rest.transform.DeliverableResourceFromEntityAssembler;
 //import com.acme.fromzeroapi.project_branch_deliverables.interfaces.acl.ProjectContextFacade;
 import com.acme.fromzeroapi.projects.interfaces.acl.ProjectContextFacade;
-import com.acme.fromzeroapi.usermanagement.interfaces.acl.ProfileContextFacade;
+import com.acme.fromzeroapi.profiles.interfaces.acl.ProfileContextFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;

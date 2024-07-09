@@ -2,7 +2,7 @@ package com.acme.fromzeroapi.message.interfaces.rest.transform;
 
 import com.acme.fromzeroapi.message.domain.model.commands.CreateMessageCommand;
 import com.acme.fromzeroapi.message.interfaces.rest.resources.CreateMessageResource;
-import com.acme.fromzeroapi.usermanagement.domain.model.aggregates.User;
+import com.acme.fromzeroapi.iam.domain.model.aggregates.User;
 
 public class CreateMessageCommandFromResourceAssembler {
 
