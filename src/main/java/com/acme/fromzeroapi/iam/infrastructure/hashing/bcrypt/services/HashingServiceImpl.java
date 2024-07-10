@@ -1,6 +1,6 @@
-package com.acme.fromzeroapi.iam.infraestructure.hashing.bcrypt.services;
+package com.acme.fromzeroapi.iam.infrastructure.hashing.bcrypt.services;
 
-import com.acme.fromzeroapi.iam.infraestructure.hashing.bcrypt.BCryptHashingService;
+import com.acme.fromzeroapi.iam.infrastructure.hashing.bcrypt.BCryptHashingService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

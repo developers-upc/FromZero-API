@@ -1,6 +1,7 @@
 package com.acme.fromzeroapi.iam.application.internal.commandservices;
 
 import com.acme.fromzeroapi.iam.application.internal.outboundservices.hashing.HashingService;
+import com.acme.fromzeroapi.iam.application.internal.outboundservices.tokens.TokenService;
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Enterprise;
 import com.acme.fromzeroapi.iam.domain.model.aggregates.User;
@@ -8,7 +9,7 @@ import com.acme.fromzeroapi.iam.domain.model.commands.*;
 import com.acme.fromzeroapi.iam.domain.services.UserCommandService;
 import com.acme.fromzeroapi.profiles.infrastructure.persistence.jpa.repositories.DeveloperRepository;
 import com.acme.fromzeroapi.profiles.infrastructure.persistence.jpa.repositories.EnterpriseRepository;
-import com.acme.fromzeroapi.iam.infraestructure.persistence.jpa.repositories.UserRepository;
+import com.acme.fromzeroapi.iam.infrastructure.persistence.jpa.repositories.UserRepository;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,18 @@ public class UserCommandServiceImpl implements UserCommandService {
     private final UserRepository userRepository;
     private final DeveloperRepository developerRepository;
     private final EnterpriseRepository enterpriseRepository;
-
+    private final TokenService tokenService;
     private final HashingService hashingService;
 
-    public UserCommandServiceImpl(UserRepository userRepository, DeveloperRepository developerRepository, EnterpriseRepository enterpriseRepository, HashingService hashingService) {
+    public UserCommandServiceImpl(UserRepository userRepository,
+                                  DeveloperRepository developerRepository,
+                                  EnterpriseRepository enterpriseRepository,
+                                  TokenService tokenService,
+                                  HashingService hashingService) {
         this.userRepository = userRepository;
         this.developerRepository = developerRepository;
         this.enterpriseRepository = enterpriseRepository;
+        this.tokenService = tokenService;
         this.hashingService = hashingService;
     }
 
@@ -120,7 +126,8 @@ public class UserCommandServiceImpl implements UserCommandService {
         if (!hashingService.matches(command.password(), user.get().getPassword())) {
             throw new IllegalArgumentException("Invalid password");
         }
-        return Optional.of(ImmutablePair.of(user.get(), "token"));
+        var token = tokenService.generateToken(user.get().getEmail());
+        return Optional.of(ImmutablePair.of(user.get(), token));
     }
 }
 

@@ -5,7 +5,7 @@ import com.acme.fromzeroapi.iam.domain.model.queries.GetAllUsersQuery;
 import com.acme.fromzeroapi.iam.domain.model.queries.GetUserByEmailQuery;
 import com.acme.fromzeroapi.iam.domain.model.queries.GetUserByIdQuery;
 import com.acme.fromzeroapi.iam.domain.services.UserQueryService;
-import com.acme.fromzeroapi.iam.infraestructure.persistence.jpa.repositories.UserRepository;
+import com.acme.fromzeroapi.iam.infrastructure.persistence.jpa.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

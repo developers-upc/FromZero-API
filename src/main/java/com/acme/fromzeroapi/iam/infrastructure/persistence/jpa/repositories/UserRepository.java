@@ -1,4 +1,4 @@
-package com.acme.fromzeroapi.iam.infraestructure.persistence.jpa.repositories;
+package com.acme.fromzeroapi.iam.infrastructure.persistence.jpa.repositories;
 
 import com.acme.fromzeroapi.iam.domain.model.aggregates.User;
 import org.springframework.data.jpa.repository.JpaRepository;
