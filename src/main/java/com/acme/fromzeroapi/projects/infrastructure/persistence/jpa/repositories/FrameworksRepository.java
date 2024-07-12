@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface FrameworksRepository extends JpaRepository<Framework, Integer> {
     Optional<Framework> findFrameworkById(Integer id);
+    boolean existsByName(String name);
 }

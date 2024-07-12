@@ -1,8 +1,8 @@
 package com.acme.fromzeroapi.iam.interfaces.rest;
 
-import com.acme.fromzeroapi.iam.domain.model.queries.GetUserByEmailQuery;
+//import com.acme.fromzeroapi.iam.domain.model.queries.GetUserByEmailQuery;
 import com.acme.fromzeroapi.iam.domain.services.UserCommandService;
-import com.acme.fromzeroapi.iam.domain.services.UserQueryService;
+//import com.acme.fromzeroapi.iam.domain.services.UserQueryService;
 import com.acme.fromzeroapi.iam.interfaces.rest.resources.*;
 import com.acme.fromzeroapi.iam.interfaces.rest.transform.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Auth", description = "Operations related to users")
 public class AuthController {
     private final UserCommandService userCommandService;
-    private final UserQueryService userQueryService;
+    //private final UserQueryService userQueryService;
 
-    public AuthController(UserCommandService userCommandService, UserQueryService userQueryService) {
+    public AuthController(UserCommandService userCommandService) {
         this.userCommandService = userCommandService;
-        this.userQueryService = userQueryService;
     }
 
 //    @Operation(summary = "Get all users")
@@ -35,7 +34,7 @@ public class AuthController {
 //                .map(ResponseEntity::ok)
 //                .orElse(ResponseEntity.notFound().build());
 //    }
-    @Operation(summary = "Get user by email")
+    /*@Operation(summary = "Get user by email")
     @GetMapping("/email/{email}")
     public ResponseEntity<UserResource> getUserByEmail(@PathVariable String email) {
         var getUserByEmailQuery=new GetUserByEmailQuery(email);
@@ -43,7 +42,7 @@ public class AuthController {
         if(user.isEmpty())return ResponseEntity.notFound().build();
         var resource = UserResourceFromEntityAssembler.toResourceFromEntity(user.get());
         return ResponseEntity.ok(resource);
-    }
+    }*/
 
     @Operation(summary = "Create Developer")
     @PostMapping("/register-developer")
@@ -92,7 +91,7 @@ public class AuthController {
         }
 
         var authenticatedUserResource = AuthenticatedUsedResourcerFromEntityAssembler.toResourceFromEntity(
-                authenticatedUser.get().getLeft());
+                authenticatedUser.get().getLeft(),authenticatedUser.get().getRight());
 
         return ResponseEntity.ok(authenticatedUserResource);
     }
