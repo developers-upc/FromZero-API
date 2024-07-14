@@ -82,7 +82,7 @@ public class AuthController {
     }
     @Operation(summary = "sign in")
     @PostMapping("/sign-in")
-    public ResponseEntity<AuthenticateUserResource> signIn(@RequestBody SignInResource signInResource){
+    public ResponseEntity<AuthenticatedUserResource> signIn(@RequestBody SignInResource signInResource){
         var signInCommand = SignInCommandFromResourceAssembler.toCommandFromResource(signInResource);
         var authenticatedUser = userCommandService.handle(signInCommand);
 

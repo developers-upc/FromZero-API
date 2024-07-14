@@ -16,6 +16,9 @@ public class Enterprise {
     @NotBlank
     @Setter
     private String enterpriseName;
+
+    private String email;
+
     @Setter
     private String description = "No description provided.";
     @Setter

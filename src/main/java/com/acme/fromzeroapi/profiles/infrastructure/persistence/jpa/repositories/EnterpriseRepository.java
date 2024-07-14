@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface EnterpriseRepository extends JpaRepository<Enterprise, Long> {
-    Optional<Enterprise> findEnterpriseByUserUserId(Long userId);
+    //Optional<Enterprise> findEnterpriseByUserUserId(Long userId);
+    Optional<Enterprise> findByEmail(String email);
 }

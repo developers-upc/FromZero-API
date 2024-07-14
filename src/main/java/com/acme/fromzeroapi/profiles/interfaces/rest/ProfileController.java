@@ -4,10 +4,7 @@ import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Enterprise;
 import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateDeveloperProfileCommand;
 import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateEnterpriseProfileCommand;
-import com.acme.fromzeroapi.profiles.domain.model.queries.GetAllDevelopersAsyncQuery;
-import com.acme.fromzeroapi.profiles.domain.model.queries.GetDeveloperByUserIdAsyncQuery;
-import com.acme.fromzeroapi.profiles.domain.model.queries.GetEnterpriseByIdQuery;
-import com.acme.fromzeroapi.profiles.domain.model.queries.GetEnterpriseByUserIdAsyncQuery;
+import com.acme.fromzeroapi.profiles.domain.model.queries.*;
 import com.acme.fromzeroapi.profiles.domain.services.ProfileCommandService;
 import com.acme.fromzeroapi.profiles.domain.services.ProfileQueryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -83,5 +80,25 @@ public class ProfileController {
         var updatedEnterprise = profileCommandService.handle(command);
 
         return ResponseEntity.ok(updatedEnterprise.get());
+    }
+    //
+    // ------------------------------------------------------
+    //
+    @Operation(summary = "Get Developer Profile Id by email")
+    @GetMapping(value = "/developer/{email}")
+    public ResponseEntity<Long> getDeveloperProfileIdByEmail(@PathVariable String email) {
+        var query = new GetDeveloperProfileIdByEmailQuery(email);
+        var developer = profileQueryService.handle(query);
+        if (developer.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(developer.get().getId());
+    }
+
+    @Operation(summary = "Get Company Profile Id by email")
+    @GetMapping(value = "/company/{email}")
+    public ResponseEntity<Long> getCompanyProfileIdByEmail(@PathVariable String email) {
+        var query = new GetCompanyProfileIdByEmailQuery(email);
+        var company = profileQueryService.handle(query);
+        if (company.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(company.get().getId());
     }
 }

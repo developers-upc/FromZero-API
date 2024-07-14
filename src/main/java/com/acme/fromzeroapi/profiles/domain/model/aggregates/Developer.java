@@ -20,6 +20,9 @@ public class Developer {
     @NotBlank
     @Setter
     private String lastName;
+
+    private String email;
+
     @Setter
     private String description = "No description provided.";
     @Setter

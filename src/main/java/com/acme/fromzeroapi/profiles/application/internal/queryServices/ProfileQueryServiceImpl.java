@@ -45,4 +45,14 @@ public class ProfileQueryServiceImpl implements ProfileQueryService {
     public Optional<Developer> handle(GetDeveloperByIdQuery query) {
         return this.developerRepository.findById(query.developerId());
     }
+
+    @Override
+    public Optional<Developer> handle(GetDeveloperProfileIdByEmailQuery query) {
+        return developerRepository.findByEmail(query.email());
+    }
+
+    @Override
+    public Optional<Enterprise> handle(GetCompanyProfileIdByEmailQuery query) {
+        return enterpriseRepository.findByEmail(query.email());
+    }
 }

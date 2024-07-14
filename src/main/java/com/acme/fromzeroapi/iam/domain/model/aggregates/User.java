@@ -9,7 +9,7 @@ import lombok.Getter;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
     @Column(nullable = false)
     private String email;
@@ -19,7 +19,6 @@ public class User {
 
     @Column(nullable = false)
     private String userType;
-
 
     public User(CreateUserCommand command){
         this.email = command.email();
