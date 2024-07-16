@@ -55,4 +55,9 @@ public class ProfileQueryServiceImpl implements ProfileQueryService {
     public Optional<Enterprise> handle(GetCompanyProfileIdByEmailQuery query) {
         return enterpriseRepository.findByEmail(query.email());
     }
+
+    @Override
+    public Optional<Enterprise> handle(GetCompanyByIdQuery query) {
+        return enterpriseRepository.findById(query.id());
+    }
 }

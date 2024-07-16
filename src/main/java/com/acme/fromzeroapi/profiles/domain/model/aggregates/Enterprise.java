@@ -1,6 +1,7 @@
 package com.acme.fromzeroapi.profiles.domain.model.aggregates;
 
 import com.acme.fromzeroapi.iam.domain.model.aggregates.User;
+import com.acme.fromzeroapi.profiles.domain.model.commands.CreateCompanyProfileCommand;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -57,6 +58,18 @@ public class Enterprise {
         this.website = website;
         this.profileImgUrl = profileImgUrl;
         this.sector = sector;
+    }
+
+    public Enterprise(CreateCompanyProfileCommand command){
+        this.enterpriseName=command.enterpriseName();
+        this.email=command.email();
+        this.description=command.description();
+        this.country=command.country();
+        this.ruc=command.ruc();
+        this.phone=command.phone();
+        this.website=command.website();
+        this.profileImgUrl=command.profileImgUrl();
+        this.sector=command.sector();
     }
 
     public Enterprise() {

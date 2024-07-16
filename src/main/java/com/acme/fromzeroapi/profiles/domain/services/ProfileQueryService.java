@@ -15,4 +15,5 @@ public interface ProfileQueryService {
     Optional<Developer> handle(GetDeveloperByIdQuery query);
     Optional<Developer> handle(GetDeveloperProfileIdByEmailQuery query);
     Optional<Enterprise> handle(GetCompanyProfileIdByEmailQuery query);
+    Optional<Enterprise> handle(GetCompanyByIdQuery query);
 }

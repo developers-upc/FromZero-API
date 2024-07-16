@@ -2,9 +2,7 @@ package com.acme.fromzeroapi.profiles.application.internal.commandServices;
 
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Enterprise;
-import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateDeveloperCompletedProjectsCommand;
-import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateDeveloperProfileCommand;
-import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateEnterpriseProfileCommand;
+import com.acme.fromzeroapi.profiles.domain.model.commands.*;
 import com.acme.fromzeroapi.profiles.domain.services.ProfileCommandService;
 import com.acme.fromzeroapi.profiles.infrastructure.persistence.jpa.repositories.DeveloperRepository;
 import com.acme.fromzeroapi.profiles.infrastructure.persistence.jpa.repositories.EnterpriseRepository;
@@ -61,6 +59,18 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
         enterpriseRepository.save(enterprise);
 
         return Optional.of(enterprise);
+    }
+
+    @Override
+    public void handle(CreateCompanyProfileCommand command) {
+        var company = new Enterprise(command);
+        enterpriseRepository.save(company);
+    }
+
+    @Override
+    public void handle(CreateDeveloperProfileCommand command) {
+        var developer = new Developer(command);
+        developerRepository.save(developer);
     }
 
 }

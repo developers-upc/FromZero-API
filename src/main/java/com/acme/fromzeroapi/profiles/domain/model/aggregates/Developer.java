@@ -1,6 +1,7 @@
 package com.acme.fromzeroapi.profiles.domain.model.aggregates;
 
 import com.acme.fromzeroapi.iam.domain.model.aggregates.User;
+import com.acme.fromzeroapi.profiles.domain.model.commands.CreateDeveloperProfileCommand;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -59,6 +60,18 @@ public class Developer {
         this.completedProjects = completedProjects;
         this.specialties = specialties;
         this.profileImgUrl = profileImgUrl;
+    }
+
+    public Developer(CreateDeveloperProfileCommand command){
+        this.firstName=command.firstName();
+        this.lastName=command.lastName();
+        this.email=command.email();
+        this.description=command.description();
+        this.country=command.country();
+        this.phone=command.phone();
+        this.completedProjects=command.completedProjects();
+        this.specialties=command.specialties();
+        this.profileImgUrl=command.profileImgUrl();
     }
 
     public Developer() {

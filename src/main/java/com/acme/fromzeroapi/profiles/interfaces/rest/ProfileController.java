@@ -7,6 +7,10 @@ import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateEnterpriseProfi
 import com.acme.fromzeroapi.profiles.domain.model.queries.*;
 import com.acme.fromzeroapi.profiles.domain.services.ProfileCommandService;
 import com.acme.fromzeroapi.profiles.domain.services.ProfileQueryService;
+import com.acme.fromzeroapi.profiles.interfaces.rest.resources.CompanyProfileResource;
+import com.acme.fromzeroapi.profiles.interfaces.rest.resources.DeveloperProfileResource;
+import com.acme.fromzeroapi.profiles.interfaces.rest.transform.CompanyProfileResourceFromEntityAssembler;
+import com.acme.fromzeroapi.profiles.interfaces.rest.transform.DeveloperProfileResourceFromEntityAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +30,7 @@ public class ProfileController {
         this.profileCommandService = profileCommandService;
     }
 
-    @Operation(summary = "Get all developers")
+    /*@Operation(summary = "Get all developers")
     @GetMapping("/developers")
     public ResponseEntity<List<Developer>> getAllDevelopers() {
         return ResponseEntity.ok(profileQueryService.handle(new GetAllDevelopersAsyncQuery()));
@@ -80,7 +84,7 @@ public class ProfileController {
         var updatedEnterprise = profileCommandService.handle(command);
 
         return ResponseEntity.ok(updatedEnterprise.get());
-    }
+    }*/
     //
     // ------------------------------------------------------
     //
@@ -100,5 +104,25 @@ public class ProfileController {
         var company = profileQueryService.handle(query);
         if (company.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(company.get().getId());
+    }
+
+    @Operation(summary = "Get Developer Profile By Id")
+    @GetMapping(value = "/developer/profile/{id}")
+    public ResponseEntity<DeveloperProfileResource> getDeveloperProfile(@PathVariable Long id){
+        var query = new GetDeveloperByIdQuery(id);
+        var developer = profileQueryService.handle(query);
+        if (developer.isEmpty()) return ResponseEntity.notFound().build();
+        var resource = DeveloperProfileResourceFromEntityAssembler.toResourceFromEntity(developer.get());
+        return ResponseEntity.ok(resource);
+    }
+
+    @Operation(summary = "Get Company Profile By Id")
+    @GetMapping(value = "/company/profile/{id}")
+    public ResponseEntity<CompanyProfileResource> getCompanyProfile(@PathVariable Long id){
+        var query = new GetCompanyByIdQuery(id);
+        var company = profileQueryService.handle(query);
+        if (company.isEmpty()) return ResponseEntity.notFound().build();
+        var resource = CompanyProfileResourceFromEntityAssembler.toResourceFromEntity(company.get());
+        return ResponseEntity.ok(resource);
     }
 }

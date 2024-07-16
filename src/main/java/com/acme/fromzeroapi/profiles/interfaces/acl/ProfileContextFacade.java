@@ -2,6 +2,8 @@ package com.acme.fromzeroapi.profiles.interfaces.acl;
 
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Enterprise;
+import com.acme.fromzeroapi.profiles.domain.model.commands.CreateCompanyProfileCommand;
+import com.acme.fromzeroapi.profiles.domain.model.commands.CreateDeveloperProfileCommand;
 import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateDeveloperCompletedProjectsCommand;
 import com.acme.fromzeroapi.profiles.domain.model.queries.GetDeveloperByIdQuery;
 import com.acme.fromzeroapi.profiles.domain.model.queries.GetDeveloperByUserIdAsyncQuery;
@@ -20,6 +22,56 @@ public class ProfileContextFacade {
                                 ProfileCommandService profileCommandService) {
         this.profileQueryService = profileQueryService;
         this.profileCommandService = profileCommandService;
+    }
+
+    public void createDeveloperProfile(
+            String firstName,
+            String lastName,
+            String email,
+            String description,
+            String country,
+            String phone,
+            int completedProjects,
+            String specialties,
+            String profileImgUrl
+    ){
+        var command = new CreateDeveloperProfileCommand(
+                firstName,
+                lastName,
+                email,
+                description,
+                country,
+                phone,
+                completedProjects,
+                specialties,
+                profileImgUrl
+        );
+        profileCommandService.handle(command);
+    }
+
+    public void createCompanyProfile(
+            String enterpriseName,
+            String email,
+            String description,
+            String country,
+            String ruc,
+            String phone,
+            String website,
+            String profileImgUrl,
+            String sector
+    ){
+        var command = new CreateCompanyProfileCommand(
+                enterpriseName,
+                email,
+                description,
+                country,
+                ruc,
+                phone,
+                website,
+                profileImgUrl,
+                sector
+        );
+        profileCommandService.handle(command);
     }
 
     public Developer getDeveloperByUserId(Long id){
