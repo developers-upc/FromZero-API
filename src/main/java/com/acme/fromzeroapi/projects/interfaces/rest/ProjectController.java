@@ -1,7 +1,7 @@
 package com.acme.fromzeroapi.projects.interfaces.rest;
 
-import com.acme.fromzeroapi.profiles.interfaces.acl.ProfileContextFacade;
-import com.acme.fromzeroapi.deliverables.interfaces.acl.DeliverableContextFacade;
+import com.acme.fromzeroapi.projects.application.internal.outboundServices.acl.ExternalDeliverableService;
+import com.acme.fromzeroapi.projects.application.internal.outboundServices.acl.ExternalProfileProjectService;
 import com.acme.fromzeroapi.projects.domain.model.aggregates.Framework;
 import com.acme.fromzeroapi.projects.domain.model.aggregates.ProgrammingLanguage;
 import com.acme.fromzeroapi.projects.domain.model.commands.AssignProjectDeveloperCommand;
@@ -17,7 +17,6 @@ import com.acme.fromzeroapi.projects.interfaces.rest.resources.CreateProjectReso
 import com.acme.fromzeroapi.projects.interfaces.rest.resources.ProjectResource;
 import com.acme.fromzeroapi.projects.interfaces.rest.resources.UpdateProjectCandidatesListResource;
 import com.acme.fromzeroapi.projects.interfaces.rest.transform.AssignedProjectDeveloperResourceFromEntityAssembler;
-import com.acme.fromzeroapi.projects.interfaces.rest.transform.CreateProjectResourceFromEntityAssembler;
 import com.acme.fromzeroapi.projects.interfaces.rest.transform.ProjectResourceFromEntityAssembler;
 import com.acme.fromzeroapi.projects.interfaces.rest.transform.UpdatedProjectResourceFromEntityAssembler;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,21 +39,21 @@ public class ProjectController {
     private final ProjectQueryService projectQueryService;
     private final ProgrammingLanguagesQueryService programmingLanguagesQueryService;
     private final FrameworksQueryService frameworksQueryService;
-    private final DeliverableContextFacade deliverableContextFacade;
-    private final ProfileContextFacade profileContextFacade;
+    private final ExternalProfileProjectService externalProfileService;
+    private final ExternalDeliverableService externalDeliverableService;
 
     public ProjectController(ProjectCommandService projectCommandService,
                              ProjectQueryService projectQueryService,
                              ProgrammingLanguagesQueryService programmingLanguagesQueryService,
                              FrameworksQueryService frameworksQueryService,
-                             DeliverableContextFacade deliverableContextFacade,
-                             ProfileContextFacade profileContextFacade) {
+                             ExternalProfileProjectService externalProfileService,
+                             ExternalDeliverableService externalDeliverableService) {
         this.projectCommandService = projectCommandService;
         this.projectQueryService = projectQueryService;
         this.programmingLanguagesQueryService = programmingLanguagesQueryService;
         this.frameworksQueryService = frameworksQueryService;
-        this.deliverableContextFacade = deliverableContextFacade;
-        this.profileContextFacade = profileContextFacade;
+        this.externalProfileService = externalProfileService;
+        this.externalDeliverableService = externalDeliverableService;
     }
 
     public List<ProgrammingLanguage> getProgrammingLanguages(List<Integer>languages) {
@@ -64,11 +63,6 @@ public class ProjectController {
                     return this.programmingLanguagesQueryService.handle(getLanguageById);
                 })
                 .collect(Collectors.toList());
-
-        // Verificar si alguno de los Optional está vacío
-        /*if (optionalProgrammingLanguages.stream().anyMatch(Optional::isEmpty)) {
-            return ResponseEntity.badRequest().build();
-        }*/
 
         // Convertir los Optional a ProgrammingLanguage
         List<ProgrammingLanguage> programmingLanguages = optionalProgrammingLanguages.stream()
@@ -94,7 +88,7 @@ public class ProjectController {
     @Operation(summary = "Create project")
     @PostMapping
     public ResponseEntity<ProjectResource> createProject(@RequestBody CreateProjectResource resource) {
-        var enterprise = this.profileContextFacade.getCompanyById(resource.ownerId());
+        var enterprise = externalProfileService.getCompanyById(resource.ownerId());
         if (enterprise == null) return ResponseEntity.badRequest().build();
         var programmingLanguages = getProgrammingLanguages(resource.languages());
         var frameworks=getFrameworks(resource.frameworks());
@@ -104,7 +98,7 @@ public class ProjectController {
         if (project.isEmpty()) return ResponseEntity.badRequest().build();
         var projectResource = ProjectResourceFromEntityAssembler.toResourceFromEntity(project.get());
 
-        this.deliverableContextFacade.createDeliverables(project.get());
+        externalDeliverableService.createDeliverables(project.get());
 
         return new ResponseEntity<>(projectResource, HttpStatus.CREATED);
     }
@@ -153,13 +147,13 @@ public class ProjectController {
         var getProjectByIdQuery = new GetProjectByIdQuery(projectId);
         var project = this.projectQueryService.handle(getProjectByIdQuery);
         if (project.isEmpty()) return ResponseEntity.badRequest().build();
-        //get developer by id, usar developer context facade
-        var developer = this.profileContextFacade.getDeveloperById(developerUserId);
+
+        var developer = externalProfileService.getDeveloperById(developerUserId);
         if (developer == null) return ResponseEntity.badRequest().build();
         var updateProjectCandidatesListCommand = new UpdateProjectCandidatesListCommand(developer, project.get());
         var updatedProject = this.projectCommandService.handle(updateProjectCandidatesListCommand);
         if (updatedProject.isEmpty()) return ResponseEntity.badRequest().build();
-        //to resource
+
         var updatedProjectResource = UpdatedProjectResourceFromEntityAssembler.toResourceFromEntity(updatedProject.get());
         return ResponseEntity.ok(updatedProjectResource);
     }
@@ -172,7 +166,7 @@ public class ProjectController {
         var getProjectByIdQuery = new GetProjectByIdQuery(projectId);
         var project = this.projectQueryService.handle(getProjectByIdQuery);
         if (project.isEmpty()) return ResponseEntity.badRequest().build();
-        var developer = this.profileContextFacade.getDeveloperById(developerUserId);
+        var developer = externalProfileService.getDeveloperById(developerUserId);
         if (developer == null) return ResponseEntity.badRequest().build();
         var assignProjectDeveloperCommand= new AssignProjectDeveloperCommand(project.get(),developer);
         var updatedProject = this.projectCommandService.handle(assignProjectDeveloperCommand);
@@ -185,8 +179,7 @@ public class ProjectController {
     @Operation(summary = "Get All Projects By Developer Id")
     @GetMapping(value = "/developer/{developerUserId}")
     public ResponseEntity<List<ProjectResource>> getAllProjectsByDeveloperId(@PathVariable Long developerUserId){
-        //get developer con el facade
-        var developer = this.profileContextFacade.getDeveloperById(developerUserId);
+        var developer = externalProfileService.getDeveloperById(developerUserId);
         if(developer==null) return ResponseEntity.badRequest().build();
         var getProjectsByDeveloperIdQuery = new GetAllProjectsByDeveloperIdQuery(developer);
         var projects=this.projectQueryService.handle(getProjectsByDeveloperIdQuery);
@@ -199,7 +192,7 @@ public class ProjectController {
     @Operation(summary = "Get All Projects By Enterprise Id")
     @GetMapping(value = "/enterprise/{enterpriseUserId}")
     public ResponseEntity<List<ProjectResource>> getAllProjectsByEnterpriseId(@PathVariable Long enterpriseUserId){
-        var enterprise = this.profileContextFacade.getCompanyById(enterpriseUserId);
+        var enterprise = externalProfileService.getCompanyById(enterpriseUserId);
         if(enterprise==null) return ResponseEntity.badRequest().build();
         var getProjectsByEnterpriseIdQuery = new GetAllProjectsByEnterpriseIdQuery(enterprise);
         var projects =this.projectQueryService.handle(getProjectsByEnterpriseIdQuery);
