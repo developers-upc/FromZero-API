@@ -35,12 +35,12 @@ public class Enterprise {
     @Setter
     private String sector = "No sector provided.";
 
-    @OneToOne
+    /*@OneToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User user;*/
 
     public Enterprise(
-            User user,
+            //User user,
             String enterpriseName,
             String description,
             String country,
@@ -49,7 +49,7 @@ public class Enterprise {
             String website,
             String profileImgUrl,
             String sector) {
-        this.user = user;
+        //this.user = user;
         this.enterpriseName = enterpriseName;
         this.description = description;
         this.country = country;

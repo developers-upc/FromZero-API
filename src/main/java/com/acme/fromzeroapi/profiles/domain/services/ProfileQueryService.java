@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public interface ProfileQueryService {
     List<Developer> handle(GetAllDevelopersAsyncQuery query);
-    Optional<Developer> handle(GetDeveloperByUserIdAsyncQuery query);
-    Optional<Enterprise> handle(GetEnterpriseByUserIdAsyncQuery query);
+    /*Optional<Developer> handle(GetDeveloperByUserIdAsyncQuery query);
+    Optional<Enterprise> handle(GetEnterpriseByUserIdAsyncQuery query);*/
     Optional<Enterprise> handle(GetEnterpriseByIdQuery query);
     Optional<Developer> handle(GetDeveloperByIdQuery query);
     Optional<Developer> handle(GetDeveloperProfileIdByEmailQuery query);

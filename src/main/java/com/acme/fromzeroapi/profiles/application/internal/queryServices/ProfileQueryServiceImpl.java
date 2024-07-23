@@ -26,7 +26,7 @@ public class ProfileQueryServiceImpl implements ProfileQueryService {
         return developerRepository.findAll();
     }
 
-    @Override
+    /*@Override
     public Optional<Developer> handle(GetDeveloperByUserIdAsyncQuery query) {
         return developerRepository.findDeveloperByUserUserId(query.id());
     }
@@ -34,7 +34,7 @@ public class ProfileQueryServiceImpl implements ProfileQueryService {
     @Override
     public Optional<Enterprise> handle(GetEnterpriseByUserIdAsyncQuery query) {
         return enterpriseRepository.findEnterpriseByUserUserId(query.id());
-    }
+    }*/
 
     @Override
     public Optional<Enterprise> handle(GetEnterpriseByIdQuery query) {

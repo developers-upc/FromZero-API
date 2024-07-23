@@ -93,8 +93,8 @@ public class ProjectController {
 
     @Operation(summary = "Create project")
     @PostMapping
-    public ResponseEntity<CreateProjectResource> createProject(@RequestBody CreateProjectResource resource) {
-        var enterprise = this.profileContextFacade.getEnterpriseByUserId(resource.ownerId());
+    public ResponseEntity<ProjectResource> createProject(@RequestBody CreateProjectResource resource) {
+        var enterprise = this.profileContextFacade.getCompanyById(resource.ownerId());
         if (enterprise == null) return ResponseEntity.badRequest().build();
         var programmingLanguages = getProgrammingLanguages(resource.languages());
         var frameworks=getFrameworks(resource.frameworks());
@@ -102,11 +102,11 @@ public class ProjectController {
                 programmingLanguages,frameworks,resource.type(),resource.budget(),resource.methodologies());
         var project = this.projectCommandService.handle(createProjectCommand);
         if (project.isEmpty()) return ResponseEntity.badRequest().build();
-        var createProjectResource = CreateProjectResourceFromEntityAssembler.toResourceFromEntity(project.get());
+        var projectResource = ProjectResourceFromEntityAssembler.toResourceFromEntity(project.get());
 
         this.deliverableContextFacade.createDeliverables(project.get());
 
-        return new ResponseEntity<>(createProjectResource, HttpStatus.CREATED);
+        return new ResponseEntity<>(projectResource, HttpStatus.CREATED);
     }
 
     @Operation(summary = "Get All Projects")
@@ -154,7 +154,7 @@ public class ProjectController {
         var project = this.projectQueryService.handle(getProjectByIdQuery);
         if (project.isEmpty()) return ResponseEntity.badRequest().build();
         //get developer by id, usar developer context facade
-        var developer = this.profileContextFacade.getDeveloperByUserId(developerUserId);
+        var developer = this.profileContextFacade.getDeveloperById(developerUserId);
         if (developer == null) return ResponseEntity.badRequest().build();
         var updateProjectCandidatesListCommand = new UpdateProjectCandidatesListCommand(developer, project.get());
         var updatedProject = this.projectCommandService.handle(updateProjectCandidatesListCommand);
@@ -172,7 +172,7 @@ public class ProjectController {
         var getProjectByIdQuery = new GetProjectByIdQuery(projectId);
         var project = this.projectQueryService.handle(getProjectByIdQuery);
         if (project.isEmpty()) return ResponseEntity.badRequest().build();
-        var developer = this.profileContextFacade.getDeveloperByUserId(developerUserId);
+        var developer = this.profileContextFacade.getDeveloperById(developerUserId);
         if (developer == null) return ResponseEntity.badRequest().build();
         var assignProjectDeveloperCommand= new AssignProjectDeveloperCommand(project.get(),developer);
         var updatedProject = this.projectCommandService.handle(assignProjectDeveloperCommand);
@@ -186,7 +186,7 @@ public class ProjectController {
     @GetMapping(value = "/developer/{developerUserId}")
     public ResponseEntity<List<ProjectResource>> getAllProjectsByDeveloperId(@PathVariable Long developerUserId){
         //get developer con el facade
-        var developer = this.profileContextFacade.getDeveloperByUserId(developerUserId);
+        var developer = this.profileContextFacade.getDeveloperById(developerUserId);
         if(developer==null) return ResponseEntity.badRequest().build();
         var getProjectsByDeveloperIdQuery = new GetAllProjectsByDeveloperIdQuery(developer);
         var projects=this.projectQueryService.handle(getProjectsByDeveloperIdQuery);
@@ -199,7 +199,7 @@ public class ProjectController {
     @Operation(summary = "Get All Projects By Enterprise Id")
     @GetMapping(value = "/enterprise/{enterpriseUserId}")
     public ResponseEntity<List<ProjectResource>> getAllProjectsByEnterpriseId(@PathVariable Long enterpriseUserId){
-        var enterprise = this.profileContextFacade.getEnterpriseByUserId(enterpriseUserId);
+        var enterprise = this.profileContextFacade.getCompanyById(enterpriseUserId);
         if(enterprise==null) return ResponseEntity.badRequest().build();
         var getProjectsByEnterpriseIdQuery = new GetAllProjectsByEnterpriseIdQuery(enterprise);
         var projects =this.projectQueryService.handle(getProjectsByEnterpriseIdQuery);

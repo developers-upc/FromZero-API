@@ -1,9 +1,9 @@
 package com.acme.fromzeroapi.profiles.interfaces.rest;
 
-import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
+/*import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Enterprise;
 import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateDeveloperProfileCommand;
-import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateEnterpriseProfileCommand;
+import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateEnterpriseProfileCommand;*/
 import com.acme.fromzeroapi.profiles.domain.model.queries.*;
 import com.acme.fromzeroapi.profiles.domain.services.ProfileCommandService;
 import com.acme.fromzeroapi.profiles.domain.services.ProfileQueryService;
@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+//import java.util.List;
 
 @RestController
 @RequestMapping("/v1/api/profiles")

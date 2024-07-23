@@ -5,6 +5,7 @@ import com.acme.fromzeroapi.profiles.domain.model.aggregates.Enterprise;
 import com.acme.fromzeroapi.profiles.domain.model.commands.CreateCompanyProfileCommand;
 import com.acme.fromzeroapi.profiles.domain.model.commands.CreateDeveloperProfileCommand;
 import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateDeveloperCompletedProjectsCommand;
+import com.acme.fromzeroapi.profiles.domain.model.queries.GetCompanyByIdQuery;
 import com.acme.fromzeroapi.profiles.domain.model.queries.GetDeveloperByIdQuery;
 import com.acme.fromzeroapi.profiles.domain.model.queries.GetDeveloperByUserIdAsyncQuery;
 import com.acme.fromzeroapi.profiles.domain.model.queries.GetEnterpriseByUserIdAsyncQuery;
@@ -74,7 +75,7 @@ public class ProfileContextFacade {
         profileCommandService.handle(command);
     }
 
-    public Developer getDeveloperByUserId(Long id){
+    /*public Developer getDeveloperByUserId(Long id){
         var getDeveloperByUserIdQuery = new GetDeveloperByUserIdAsyncQuery(id);
         var developer = this.profileQueryService.handle(getDeveloperByUserIdQuery);
         return developer.orElse(null);
@@ -84,6 +85,17 @@ public class ProfileContextFacade {
         var getEnterpriseByUserIdQuery = new GetEnterpriseByUserIdAsyncQuery(id);
         var enterprise = this.profileQueryService.handle(getEnterpriseByUserIdQuery);
         return enterprise.orElse(null);
+    }*/
+    public Developer getDeveloperById(Long id){
+        var query = new GetDeveloperByIdQuery(id);
+        var developer = profileQueryService.handle(query);
+        return developer.orElse(null);
+    }
+
+    public Enterprise getCompanyById(Long id){
+        var query = new GetCompanyByIdQuery(id);
+        var company = profileQueryService.handle(query);
+        return company.orElse(null);
     }
 
     public void updateDeveloperCompletedProjects(Long developerId){
