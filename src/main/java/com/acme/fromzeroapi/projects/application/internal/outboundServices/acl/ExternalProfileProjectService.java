@@ -1,7 +1,7 @@
 package com.acme.fromzeroapi.projects.application.internal.outboundServices.acl;
 
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
-import com.acme.fromzeroapi.profiles.domain.model.aggregates.Enterprise;
+import com.acme.fromzeroapi.profiles.domain.model.aggregates.Company;
 import com.acme.fromzeroapi.profiles.interfaces.acl.ProfileContextFacade;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class ExternalProfileProjectService {
         return profileContextFacade.getDeveloperById(developerId);
     }
 
-    public Enterprise getCompanyById(Long companyId){
+    public Company getCompanyById(Long companyId){
         return profileContextFacade.getCompanyById(companyId);
     }
 }

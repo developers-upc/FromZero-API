@@ -177,9 +177,9 @@ public class ProjectController {
     }
 
     @Operation(summary = "Get All Projects By Developer Id")
-    @GetMapping(value = "/developer/{developerUserId}")
-    public ResponseEntity<List<ProjectResource>> getAllProjectsByDeveloperId(@PathVariable Long developerUserId){
-        var developer = externalProfileService.getDeveloperById(developerUserId);
+    @GetMapping(value = "/developer/{developerId}")
+    public ResponseEntity<List<ProjectResource>> getAllProjectsByDeveloperId(@PathVariable Long developerId){
+        var developer = externalProfileService.getDeveloperById(developerId);
         if(developer==null) return ResponseEntity.badRequest().build();
         var getProjectsByDeveloperIdQuery = new GetAllProjectsByDeveloperIdQuery(developer);
         var projects=this.projectQueryService.handle(getProjectsByDeveloperIdQuery);
@@ -189,13 +189,13 @@ public class ProjectController {
         return ResponseEntity.ok(projectsResources);
     }
 
-    @Operation(summary = "Get All Projects By Enterprise Id")
-    @GetMapping(value = "/enterprise/{enterpriseUserId}")
-    public ResponseEntity<List<ProjectResource>> getAllProjectsByEnterpriseId(@PathVariable Long enterpriseUserId){
-        var enterprise = externalProfileService.getCompanyById(enterpriseUserId);
-        if(enterprise==null) return ResponseEntity.badRequest().build();
-        var getProjectsByEnterpriseIdQuery = new GetAllProjectsByEnterpriseIdQuery(enterprise);
-        var projects =this.projectQueryService.handle(getProjectsByEnterpriseIdQuery);
+    @Operation(summary = "Get All Projects By Company Id")
+    @GetMapping(value = "/company/{companyId}")
+    public ResponseEntity<List<ProjectResource>> getAllProjectsByEnterpriseId(@PathVariable Long companyId){
+        var company = externalProfileService.getCompanyById(companyId);
+        if(company==null) return ResponseEntity.badRequest().build();
+        var getProjectsByCompanyIdQuery = new GetAllProjectsByCompanyIdQuery(company);
+        var projects =this.projectQueryService.handle(getProjectsByCompanyIdQuery);
         var projectResources = projects.stream()
                 .map(ProjectResourceFromEntityAssembler::toResourceFromEntity)
                 .collect(Collectors.toList());

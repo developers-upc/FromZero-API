@@ -1,14 +1,12 @@
 package com.acme.fromzeroapi.profiles.interfaces.acl;
 
+import com.acme.fromzeroapi.profiles.domain.model.aggregates.Company;
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
-import com.acme.fromzeroapi.profiles.domain.model.aggregates.Enterprise;
 import com.acme.fromzeroapi.profiles.domain.model.commands.CreateCompanyProfileCommand;
 import com.acme.fromzeroapi.profiles.domain.model.commands.CreateDeveloperProfileCommand;
 import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateDeveloperCompletedProjectsCommand;
 import com.acme.fromzeroapi.profiles.domain.model.queries.GetCompanyByIdQuery;
 import com.acme.fromzeroapi.profiles.domain.model.queries.GetDeveloperByIdQuery;
-import com.acme.fromzeroapi.profiles.domain.model.queries.GetDeveloperByUserIdAsyncQuery;
-import com.acme.fromzeroapi.profiles.domain.model.queries.GetEnterpriseByUserIdAsyncQuery;
 import com.acme.fromzeroapi.profiles.domain.services.ProfileCommandService;
 import com.acme.fromzeroapi.profiles.domain.services.ProfileQueryService;
 //import com.acme.fromzeroapi.developer_branch_projects.domain.model.queries.GetDeveloperByIdQuery;
@@ -51,7 +49,7 @@ public class ProfileContextFacade {
     }
 
     public void createCompanyProfile(
-            String enterpriseName,
+            String companyName,
             String email,
             String description,
             String country,
@@ -62,7 +60,7 @@ public class ProfileContextFacade {
             String sector
     ){
         var command = new CreateCompanyProfileCommand(
-                enterpriseName,
+                companyName,
                 email,
                 description,
                 country,
@@ -75,24 +73,13 @@ public class ProfileContextFacade {
         profileCommandService.handle(command);
     }
 
-    /*public Developer getDeveloperByUserId(Long id){
-        var getDeveloperByUserIdQuery = new GetDeveloperByUserIdAsyncQuery(id);
-        var developer = this.profileQueryService.handle(getDeveloperByUserIdQuery);
-        return developer.orElse(null);
-    }
-
-    public Enterprise getEnterpriseByUserId(Long id){
-        var getEnterpriseByUserIdQuery = new GetEnterpriseByUserIdAsyncQuery(id);
-        var enterprise = this.profileQueryService.handle(getEnterpriseByUserIdQuery);
-        return enterprise.orElse(null);
-    }*/
     public Developer getDeveloperById(Long id){
         var query = new GetDeveloperByIdQuery(id);
         var developer = profileQueryService.handle(query);
         return developer.orElse(null);
     }
 
-    public Enterprise getCompanyById(Long id){
+    public Company getCompanyById(Long id){
         var query = new GetCompanyByIdQuery(id);
         var company = profileQueryService.handle(query);
         return company.orElse(null);

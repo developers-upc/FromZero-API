@@ -12,14 +12,14 @@ public class ProjectResourceFromEntityAssembler {
              * Returns ProjectResource
              */
             return new ProjectResource(entity.getId(),entity.getName(),entity.getDescription(),
-                    entity.getState(), entity.getProgress(),entity.getEnterprise().getId(),entity.getCandidates(),
+                    entity.getState(), entity.getProgress(),entity.getCompany().getId(),entity.getCandidates(),
                     entity.getLanguages(),entity.getFrameworks(),entity.getType(),
                     entity.getBudget(),entity.getMethodologies());
         }
 
         if("En progreso".equals(entity.getState())){
             return new ProjectResource(entity.getId(),entity.getName(),entity.getDescription(),
-                    entity.getState(), entity.getProgress(),entity.getEnterprise().getId(),
+                    entity.getState(), entity.getProgress(),entity.getCompany().getId(),
                     entity.getDeveloper().getId(),entity.getCandidates(),
                     entity.getLanguages(),entity.getFrameworks(),entity.getType(),
                     entity.getBudget(),entity.getMethodologies());

@@ -1,10 +1,10 @@
 package com.acme.fromzeroapi.iam.domain.model.commands;
 
-public record SignUpEnterpriseCommand(
+public record SignUpCompanyCommand(
         CreateUserCommand createUserCommand,
         String enterpriseName
 ) {
-        public SignUpEnterpriseCommand(String mail, String password, String enterpriseName) {
+        public SignUpCompanyCommand(String mail, String password, String enterpriseName) {
                 this(new CreateUserCommand(mail, password, "E"), enterpriseName);
         }
 

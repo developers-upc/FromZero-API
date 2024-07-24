@@ -1,6 +1,5 @@
 package com.acme.fromzeroapi.profiles.domain.model.aggregates;
 
-import com.acme.fromzeroapi.iam.domain.model.aggregates.User;
 import com.acme.fromzeroapi.profiles.domain.model.commands.CreateCompanyProfileCommand;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -9,14 +8,14 @@ import lombok.Setter;
 
 @Getter
 @Entity
-public class Enterprise {
+public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
     @Setter
-    private String enterpriseName;
+    private String companyName;
 
     private String email;
 
@@ -39,9 +38,9 @@ public class Enterprise {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;*/
 
-    public Enterprise(
+    public Company(
             //User user,
-            String enterpriseName,
+            String companyName,
             String description,
             String country,
             String ruc,
@@ -50,7 +49,7 @@ public class Enterprise {
             String profileImgUrl,
             String sector) {
         //this.user = user;
-        this.enterpriseName = enterpriseName;
+        this.companyName = companyName;
         this.description = description;
         this.country = country;
         this.ruc = ruc;
@@ -60,8 +59,8 @@ public class Enterprise {
         this.sector = sector;
     }
 
-    public Enterprise(CreateCompanyProfileCommand command){
-        this.enterpriseName=command.enterpriseName();
+    public Company(CreateCompanyProfileCommand command){
+        this.companyName =command.companyName();
         this.email=command.email();
         this.description=command.description();
         this.country=command.country();
@@ -72,7 +71,7 @@ public class Enterprise {
         this.sector=command.sector();
     }
 
-    public Enterprise() {
+    public Company() {
 
     }
 }

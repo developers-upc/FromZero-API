@@ -1,7 +1,7 @@
 package com.acme.fromzeroapi.profiles.domain.model.commands;
 
 public record CreateCompanyProfileCommand(
-        String enterpriseName,
+        String companyName,
         String email,
         String description,
         String country,
