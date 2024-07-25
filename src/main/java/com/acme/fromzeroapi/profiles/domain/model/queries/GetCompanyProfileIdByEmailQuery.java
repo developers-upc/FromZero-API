@@ -1,4 +1,4 @@
 package com.acme.fromzeroapi.profiles.domain.model.queries;
 
-public record GetEnterpriseByUserIdAsyncQuery(Long id) {
+public record GetCompanyProfileIdByEmailQuery(String email) {
 }

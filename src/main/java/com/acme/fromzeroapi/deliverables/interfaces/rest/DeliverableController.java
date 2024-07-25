@@ -1,7 +1,5 @@
 package com.acme.fromzeroapi.deliverables.interfaces.rest;
 
-
-//import com.acme.fromzeroapi.deliverables.domain.model.commands.CreateDeliverableCommand;
 import com.acme.fromzeroapi.deliverables.domain.model.commands.UpdateDeliverableStatusCommand;
 import com.acme.fromzeroapi.deliverables.domain.model.commands.UpdateDeveloperMessageCommand;
 import com.acme.fromzeroapi.deliverables.domain.model.queries.GetAllDeliverablesByProjectIdQuery;
@@ -12,9 +10,7 @@ import com.acme.fromzeroapi.deliverables.domain.services.DeliverableQueryService
 import com.acme.fromzeroapi.deliverables.interfaces.rest.resourses.CreateDeliverableResource;
 import com.acme.fromzeroapi.deliverables.interfaces.rest.resourses.DeliverableResource;
 import com.acme.fromzeroapi.deliverables.interfaces.rest.transform.CreateDeliverableCommandFromResourceAssembler;
-//import com.acme.fromzeroapi.deliverables.interfaces.rest.transform.CreateDeliverableResourceFromEntityAssembler;
 import com.acme.fromzeroapi.deliverables.interfaces.rest.transform.DeliverableResourceFromEntityAssembler;
-//import com.acme.fromzeroapi.project_branch_deliverables.interfaces.acl.ProjectContextFacade;
 import com.acme.fromzeroapi.projects.interfaces.acl.ProjectContextFacade;
 import com.acme.fromzeroapi.profiles.interfaces.acl.ProfileContextFacade;
 import io.swagger.v3.oas.annotations.Operation;

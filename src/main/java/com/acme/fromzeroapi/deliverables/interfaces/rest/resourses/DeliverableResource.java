@@ -1,7 +1,5 @@
 package com.acme.fromzeroapi.deliverables.interfaces.rest.resourses;
 
-//import com.acme.fromzeroapi.project_branch_deliverables.domain.model.aggregates.Project;
-
 import com.acme.fromzeroapi.projects.domain.model.aggregates.Project;
 
 import java.time.LocalDate;

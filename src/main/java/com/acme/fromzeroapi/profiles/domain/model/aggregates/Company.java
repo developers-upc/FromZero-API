@@ -1,6 +1,6 @@
 package com.acme.fromzeroapi.profiles.domain.model.aggregates;
 
-import com.acme.fromzeroapi.iam.domain.model.aggregates.User;
+import com.acme.fromzeroapi.profiles.domain.model.commands.CreateCompanyProfileCommand;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -8,14 +8,17 @@ import lombok.Setter;
 
 @Getter
 @Entity
-public class Enterprise {
+public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
     @Setter
-    private String enterpriseName;
+    private String companyName;
+
+    private String email;
+
     @Setter
     private String description = "No description provided.";
     @Setter
@@ -31,13 +34,13 @@ public class Enterprise {
     @Setter
     private String sector = "No sector provided.";
 
-    @OneToOne
+    /*@OneToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User user;*/
 
-    public Enterprise(
-            User user,
-            String enterpriseName,
+    public Company(
+            //User user,
+            String companyName,
             String description,
             String country,
             String ruc,
@@ -45,8 +48,8 @@ public class Enterprise {
             String website,
             String profileImgUrl,
             String sector) {
-        this.user = user;
-        this.enterpriseName = enterpriseName;
+        //this.user = user;
+        this.companyName = companyName;
         this.description = description;
         this.country = country;
         this.ruc = ruc;
@@ -56,7 +59,19 @@ public class Enterprise {
         this.sector = sector;
     }
 
-    public Enterprise() {
+    public Company(CreateCompanyProfileCommand command){
+        this.companyName =command.companyName();
+        this.email=command.email();
+        this.description=command.description();
+        this.country=command.country();
+        this.ruc=command.ruc();
+        this.phone=command.phone();
+        this.website=command.website();
+        this.profileImgUrl=command.profileImgUrl();
+        this.sector=command.sector();
+    }
+
+    public Company() {
 
     }
 }

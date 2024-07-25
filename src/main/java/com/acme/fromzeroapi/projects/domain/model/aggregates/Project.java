@@ -1,9 +1,7 @@
 package com.acme.fromzeroapi.projects.domain.model.aggregates;
 
-/*import com.acme.fromzeroapi.developer_branch_projects.domain.model.aggregates.Developer;
-import com.acme.fromzeroapi.enterprise_branch_projects.domain.model.aggregates.Enterprise;*/
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
-import com.acme.fromzeroapi.profiles.domain.model.aggregates.Enterprise;
+import com.acme.fromzeroapi.profiles.domain.model.aggregates.Company;
 import com.acme.fromzeroapi.projects.domain.model.commands.CreateProjectCommand;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -34,8 +32,8 @@ public class Project {
     private Double progress;
 
     @ManyToOne
-    @JoinColumn(name = "enterprise_id")
-    private Enterprise enterprise;
+    @JoinColumn(name = "company_id")
+    private Company company;
 
     @Setter
     @ManyToOne
@@ -86,7 +84,7 @@ public class Project {
         this.description=command.description();
         this.state="En busqueda";
         this.progress=0.0;
-        this.enterprise=command.enterprise();
+        this.company =command.company();
         this.developer=null;
         this.languages=new ArrayList<>();
         this.frameworks=new ArrayList<>();
