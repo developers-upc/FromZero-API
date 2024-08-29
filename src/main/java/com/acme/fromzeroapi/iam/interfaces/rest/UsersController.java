@@ -2,8 +2,6 @@ package com.acme.fromzeroapi.iam.interfaces.rest;
 
 import com.acme.fromzeroapi.iam.domain.model.queries.GetUserByEmailQuery;
 import com.acme.fromzeroapi.iam.domain.services.UserQueryService;
-import com.acme.fromzeroapi.iam.interfaces.rest.resources.UserResource;
-import com.acme.fromzeroapi.iam.interfaces.rest.transform.UserResourceFromEntityAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
@@ -24,13 +22,12 @@ public class UsersController {
         this.userQueryService = userQueryService;
     }
 
-    @Operation(summary = "Get user by email")
+    @Operation(summary = "Get user id by email")
     @GetMapping("/email/{email}")
-    public ResponseEntity<UserResource> getUserByEmail(@PathVariable String email) {
-        var getUserByEmailQuery=new GetUserByEmailQuery(email);
-        var user = this.userQueryService.handle(getUserByEmailQuery);
+    public ResponseEntity<Long> getUserIdByEmail(@PathVariable String email) {
+        var query=new GetUserByEmailQuery(email);
+        var user = this.userQueryService.handle(query);
         if(user.isEmpty())return ResponseEntity.notFound().build();
-        var resource = UserResourceFromEntityAssembler.toResourceFromEntity(user.get());
-        return ResponseEntity.ok(resource);
+        return ResponseEntity.ok(user.get().getId());
     }
 }
