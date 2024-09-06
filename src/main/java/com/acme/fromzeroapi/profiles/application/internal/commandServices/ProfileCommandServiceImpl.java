@@ -1,13 +1,11 @@
 package com.acme.fromzeroapi.profiles.application.internal.commandServices;
 
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
-import com.acme.fromzeroapi.profiles.domain.model.aggregates.Enterprise;
-import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateDeveloperCompletedProjectsCommand;
-import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateDeveloperProfileCommand;
-import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateEnterpriseProfileCommand;
+import com.acme.fromzeroapi.profiles.domain.model.aggregates.Company;
+import com.acme.fromzeroapi.profiles.domain.model.commands.*;
 import com.acme.fromzeroapi.profiles.domain.services.ProfileCommandService;
+import com.acme.fromzeroapi.profiles.infrastructure.persistence.jpa.repositories.CompanyRepository;
 import com.acme.fromzeroapi.profiles.infrastructure.persistence.jpa.repositories.DeveloperRepository;
-import com.acme.fromzeroapi.profiles.infrastructure.persistence.jpa.repositories.EnterpriseRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,9 +13,9 @@ import java.util.Optional;
 @Service
 public class ProfileCommandServiceImpl implements ProfileCommandService {
     private final DeveloperRepository developerRepository;
-    private final EnterpriseRepository enterpriseRepository;
+    private final CompanyRepository enterpriseRepository;
 
-    public ProfileCommandServiceImpl(DeveloperRepository developerRepository, EnterpriseRepository enterpriseRepository) {
+    public ProfileCommandServiceImpl(DeveloperRepository developerRepository, CompanyRepository enterpriseRepository) {
         this.developerRepository = developerRepository;
         this.enterpriseRepository = enterpriseRepository;
     }
@@ -47,9 +45,9 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
     }
 
     @Override
-    public Optional<Enterprise> handle(UpdateEnterpriseProfileCommand command) {
+    public Optional<Company> handle(UpdateCompanyProfileCommand command) {
         var enterprise= enterpriseRepository.findById(command.id())
-                .orElseThrow(() -> new IllegalArgumentException("Enterprise with id " + command.id() + " not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Company with id " + command.id() + " not found"));
         enterprise.setDescription(command.description());
         enterprise.setCountry(command.country());
         enterprise.setRuc(command.ruc());
@@ -61,6 +59,18 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
         enterpriseRepository.save(enterprise);
 
         return Optional.of(enterprise);
+    }
+
+    @Override
+    public void handle(CreateCompanyProfileCommand command) {
+        var company = new Company(command);
+        enterpriseRepository.save(company);
+    }
+
+    @Override
+    public void handle(CreateDeveloperProfileCommand command) {
+        var developer = new Developer(command);
+        developerRepository.save(developer);
     }
 
 }

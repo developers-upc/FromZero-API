@@ -8,8 +8,6 @@ import com.acme.fromzeroapi.deliverables.domain.services.DeliverableCommandServi
 import com.acme.fromzeroapi.deliverables.infrastructure.persistence.jpa.repositories.DeliverableRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +28,6 @@ public class DeliverableCommandServiceImpl implements DeliverableCommandService 
 
     @Override
     public void handle(List<CreateDeliverableCommand> commands) {
-        //List<Deliverable> deliverablesList  = new ArrayList<>();
         commands.forEach(command -> {
             Optional<Deliverable> deliverable = this.handle(command);
             if(deliverable.isEmpty())throw new IllegalArgumentException();
@@ -60,7 +57,6 @@ public class DeliverableCommandServiceImpl implements DeliverableCommandService 
             if(deliverable.isEmpty())throw new IllegalArgumentException();
             if (command.accepted()){
                 deliverable.get().setState("Completed");
-                //System.out.println("El proyecto es: "+deliverable.get().getProject().getProgress().toString());
             }else deliverable.get().setState("Rejected");
             this.deliverableRepository.save(deliverable.get());
             return deliverable;

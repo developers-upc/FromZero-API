@@ -1,8 +1,15 @@
 package com.acme.fromzeroapi.message.interfaces.rest.resources;
 
-import com.acme.fromzeroapi.iam.domain.model.aggregates.User;
-
 import java.time.LocalDate;
 
-public record MessageResource(Long id, String subject, String emailBody, User recipient, User sender, LocalDate sentTime) {
+public record MessageResource(
+        Long id,
+        String subject,
+        String emailBody,
+        //User recipient,
+        String recipientEmail,
+        //User sender,
+        String senderEmail,
+        LocalDate sentTime
+) {
 }

@@ -6,6 +6,6 @@ import com.acme.fromzeroapi.iam.interfaces.rest.resources.UserResource;
 
 public class UserResourceFromEntityAssembler {
     public static UserResource toResourceFromEntity(User user) {
-        return new UserResource(user.getUserId(), user.getUserType());
+        return new UserResource(user.getId(), user.getUserType());
     }
 }

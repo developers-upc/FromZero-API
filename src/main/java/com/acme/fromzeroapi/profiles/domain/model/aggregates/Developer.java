@@ -1,6 +1,7 @@
 package com.acme.fromzeroapi.profiles.domain.model.aggregates;
 
 import com.acme.fromzeroapi.iam.domain.model.aggregates.User;
+import com.acme.fromzeroapi.profiles.domain.model.commands.CreateDeveloperProfileCommand;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -20,6 +21,9 @@ public class Developer {
     @NotBlank
     @Setter
     private String lastName;
+
+    private String email;
+
     @Setter
     private String description = "No description provided.";
     @Setter
@@ -33,12 +37,12 @@ public class Developer {
     @Setter
     private String profileImgUrl = "https://cdn-icons-png.flaticon.com/512/3237/3237472.png";
 
-    @OneToOne
+    /*@OneToOne
     @JoinColumn(name = "userId", nullable = false)
-    private User user;
+    private User user;*/
 
     public Developer(
-            User user,
+            //User user,
             String firstName,
             String lastName,
             String description,
@@ -47,7 +51,7 @@ public class Developer {
             int completedProjects,
             String specialties,
             String profileImgUrl) {
-        this.user = user;
+        //this.user = user;
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = description;
@@ -56,6 +60,18 @@ public class Developer {
         this.completedProjects = completedProjects;
         this.specialties = specialties;
         this.profileImgUrl = profileImgUrl;
+    }
+
+    public Developer(CreateDeveloperProfileCommand command){
+        this.firstName=command.firstName();
+        this.lastName=command.lastName();
+        this.email=command.email();
+        this.description=command.description();
+        this.country=command.country();
+        this.phone=command.phone();
+        this.completedProjects=command.completedProjects();
+        this.specialties=command.specialties();
+        this.profileImgUrl=command.profileImgUrl();
     }
 
     public Developer() {

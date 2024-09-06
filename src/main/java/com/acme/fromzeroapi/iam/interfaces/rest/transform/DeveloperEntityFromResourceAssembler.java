@@ -5,7 +5,7 @@ import com.acme.fromzeroapi.iam.domain.model.aggregates.User;
 import com.acme.fromzeroapi.iam.domain.model.commands.SignUpDeveloperCommand;
 
 public class DeveloperEntityFromResourceAssembler {
-    public static Developer toDeveloperFromCommand(SignUpDeveloperCommand command, User user){
+    /*public static Developer toDeveloperFromCommand(SignUpDeveloperCommand command, User user){
         return new Developer(
                 user,
                 command.firstName(),
@@ -17,5 +17,5 @@ public class DeveloperEntityFromResourceAssembler {
                 "No specialties provided.",
                 "https://cdn-icons-png.flaticon.com/512/3237/3237472.png"
         );
-    }
+    }*/
 }

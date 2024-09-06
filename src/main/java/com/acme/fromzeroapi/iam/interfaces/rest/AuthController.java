@@ -1,8 +1,6 @@
 package com.acme.fromzeroapi.iam.interfaces.rest;
 
-import com.acme.fromzeroapi.iam.domain.model.queries.GetUserByEmailQuery;
 import com.acme.fromzeroapi.iam.domain.services.UserCommandService;
-import com.acme.fromzeroapi.iam.domain.services.UserQueryService;
 import com.acme.fromzeroapi.iam.interfaces.rest.resources.*;
 import com.acme.fromzeroapi.iam.interfaces.rest.transform.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,33 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Auth", description = "Operations related to users")
 public class AuthController {
     private final UserCommandService userCommandService;
-    private final UserQueryService userQueryService;
 
-    public AuthController(UserCommandService userCommandService, UserQueryService userQueryService) {
+    public AuthController(UserCommandService userCommandService) {
         this.userCommandService = userCommandService;
-        this.userQueryService = userQueryService;
-    }
-
-//    @Operation(summary = "Get all users")
-//    @GetMapping
-//    public ResponseEntity<List<User>> getAllUsers(){
-//        return ResponseEntity.ok(userQueryService.handle(new GetAllUsersQuery()));
-//    }
-//    @Operation(summary = "Get user by id")
-//    @GetMapping("/{id}")
-//    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-//        return userQueryService.handle(new GetUserByIdQuery(id))
-//                .map(ResponseEntity::ok)
-//                .orElse(ResponseEntity.notFound().build());
-//    }
-    @Operation(summary = "Get user by email")
-    @GetMapping("/email/{email}")
-    public ResponseEntity<UserResource> getUserByEmail(@PathVariable String email) {
-        var getUserByEmailQuery=new GetUserByEmailQuery(email);
-        var user = this.userQueryService.handle(getUserByEmailQuery);
-        if(user.isEmpty())return ResponseEntity.notFound().build();
-        var resource = UserResourceFromEntityAssembler.toResourceFromEntity(user.get());
-        return ResponseEntity.ok(resource);
     }
 
     @Operation(summary = "Create Developer")
@@ -57,10 +31,10 @@ public class AuthController {
         var userResource = UserResourceFromEntityAssembler.toResourceFromEntity(user.get());
         return new ResponseEntity<>(userResource, HttpStatus.CREATED);
     }
-    @Operation(summary = "Create Enterprise")
-    @PostMapping("/register-enterprise")
-    public ResponseEntity<UserResource> createEnterprise(@RequestBody SignUpEnterpriseResource resource) {
-        var registerCommand = EnterpriseCommandFromSignUpEnterpriseResourceAssembler.toCommandFromResource(resource);
+    @Operation(summary = "Create Company")
+    @PostMapping("/register-company")
+    public ResponseEntity<UserResource> createCompany(@RequestBody SignUpCompanyResource resource) {
+        var registerCommand = CompanyCommandFromSignUpCompanyResourceAssembler.toCommandFromResource(resource);
         var user = userCommandService.handle(registerCommand);
 
         if (user.isEmpty()){
@@ -83,7 +57,7 @@ public class AuthController {
     }
     @Operation(summary = "sign in")
     @PostMapping("/sign-in")
-    public ResponseEntity<AuthenticateUserResource> signIn(@RequestBody SignInResource signInResource){
+    public ResponseEntity<AuthenticatedUserResource> signIn(@RequestBody SignInResource signInResource){
         var signInCommand = SignInCommandFromResourceAssembler.toCommandFromResource(signInResource);
         var authenticatedUser = userCommandService.handle(signInCommand);
 
@@ -92,7 +66,7 @@ public class AuthController {
         }
 
         var authenticatedUserResource = AuthenticatedUsedResourcerFromEntityAssembler.toResourceFromEntity(
-                authenticatedUser.get().getLeft());
+                authenticatedUser.get().getLeft(),authenticatedUser.get().getRight());
 
         return ResponseEntity.ok(authenticatedUserResource);
     }

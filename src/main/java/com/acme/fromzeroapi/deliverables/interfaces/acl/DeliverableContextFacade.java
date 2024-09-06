@@ -1,15 +1,11 @@
 package com.acme.fromzeroapi.deliverables.interfaces.acl;
 
-//import com.acme.fromzeroapi.deliverables.domain.model.aggregates.Deliverable;
-//import com.acme.fromzeroapi.deliverables.domain.model.commands.CreateDeliverableCommand;
 import com.acme.fromzeroapi.deliverables.domain.model.commands.CreateDeliverableCommand;
 import com.acme.fromzeroapi.deliverables.domain.services.DeliverableCommandService;
-//import com.acme.fromzeroapi.project_branch_deliverables.domain.model.aggregates.Project;
 import com.acme.fromzeroapi.projects.domain.model.aggregates.Project;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -119,10 +115,5 @@ public class DeliverableContextFacade {
             }
         }
     }
-    /*public void createDeliverables(String methodologies, Project project){
-        if(methodologies.isEmpty()){
 
-        }
-        var createDeliverableCommand = new CreateDeliverableCommand();
-    }*/
 }
