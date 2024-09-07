@@ -22,7 +22,8 @@ public class Project {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Lob
+    @Column(columnDefinition = "TEXT",nullable = false)
     private String description;
 
     @Setter
