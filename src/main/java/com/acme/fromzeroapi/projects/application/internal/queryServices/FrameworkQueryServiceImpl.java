@@ -1,6 +1,6 @@
 package com.acme.fromzeroapi.projects.application.internal.queryServices;
 
-import com.acme.fromzeroapi.projects.domain.model.aggregates.Framework;
+import com.acme.fromzeroapi.projects.domain.model.entity.Framework;
 import com.acme.fromzeroapi.projects.domain.model.queries.GetFrameworkByIdQuery;
 import com.acme.fromzeroapi.projects.domain.services.FrameworksQueryService;
 import com.acme.fromzeroapi.projects.infrastructure.persistence.jpa.repositories.FrameworksRepository;

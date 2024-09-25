@@ -1,6 +1,6 @@
 package com.acme.fromzeroapi.projects.domain.services;
 
-import com.acme.fromzeroapi.projects.domain.model.aggregates.ProgrammingLanguage;
+import com.acme.fromzeroapi.projects.domain.model.entity.ProgrammingLanguage;
 import com.acme.fromzeroapi.projects.domain.model.queries.GetProgrammingLanguageByIdQuery;
 
 import java.util.Optional;

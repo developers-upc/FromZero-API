@@ -1,6 +1,6 @@
 package com.acme.fromzeroapi.projects.application.internal.commandServices;
 
-import com.acme.fromzeroapi.projects.domain.model.aggregates.ProgrammingLanguage;
+import com.acme.fromzeroapi.projects.domain.model.entity.ProgrammingLanguage;
 import com.acme.fromzeroapi.projects.domain.model.commands.SeedProgrammingLanguages;
 import com.acme.fromzeroapi.projects.domain.model.valueObjects.ProgrammingLanguages;
 import com.acme.fromzeroapi.projects.domain.services.ProgrammingLanguagesCommandService;

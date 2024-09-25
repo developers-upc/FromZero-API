@@ -1,6 +1,7 @@
-package com.acme.fromzeroapi.projects.domain.model.aggregates;
+package com.acme.fromzeroapi.projects.domain.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+/*import com.acme.fromzeroapi.projects.domain.model.aggregates.Project;
+import com.fasterxml.jackson.annotation.JsonBackReference;*/
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -14,9 +15,9 @@ public class ProgrammingLanguage {
     private int id;
     private String name;
 
-    @ManyToMany(mappedBy = "languages")
+    /*@ManyToMany(mappedBy = "languages")
     @JsonBackReference
-    private List<Project> projects;
+    private List<Project> projects;*/
 
     public ProgrammingLanguage(String name){
         this.name=name;

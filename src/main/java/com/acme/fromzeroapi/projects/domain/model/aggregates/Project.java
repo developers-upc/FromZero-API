@@ -3,6 +3,8 @@ package com.acme.fromzeroapi.projects.domain.model.aggregates;
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Company;
 import com.acme.fromzeroapi.projects.domain.model.commands.CreateProjectCommand;
+import com.acme.fromzeroapi.projects.domain.model.entity.Framework;
+import com.acme.fromzeroapi.projects.domain.model.entity.ProgrammingLanguage;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -47,7 +49,7 @@ public class Project {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "developer_id")
     )
-    @JsonManagedReference
+    //@JsonManagedReference
     private List<Developer> candidates;
 
     //many to many relationship
@@ -57,7 +59,7 @@ public class Project {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "programming_language_id")
     )
-    @JsonManagedReference
+    //@JsonManagedReference
     private List<ProgrammingLanguage> languages;
 
     //many to many relationship
@@ -67,7 +69,7 @@ public class Project {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "framework_id")
     )
-    @JsonManagedReference
+    //@JsonManagedReference
     private List<Framework> frameworks;
 
     private String type;

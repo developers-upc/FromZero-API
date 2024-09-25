@@ -1,8 +1,8 @@
 package com.acme.fromzeroapi.projects.interfaces.rest.resources;
 
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
-import com.acme.fromzeroapi.projects.domain.model.aggregates.Framework;
-import com.acme.fromzeroapi.projects.domain.model.aggregates.ProgrammingLanguage;
+import com.acme.fromzeroapi.projects.domain.model.entity.Framework;
+import com.acme.fromzeroapi.projects.domain.model.entity.ProgrammingLanguage;
 
 import java.util.List;
 

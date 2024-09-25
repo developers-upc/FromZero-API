@@ -1,7 +1,7 @@
 package com.acme.fromzeroapi.projects.interfaces.rest.transform;
 
-import com.acme.fromzeroapi.projects.domain.model.aggregates.Framework;
-import com.acme.fromzeroapi.projects.domain.model.aggregates.ProgrammingLanguage;
+import com.acme.fromzeroapi.projects.domain.model.entity.Framework;
+import com.acme.fromzeroapi.projects.domain.model.entity.ProgrammingLanguage;
 import com.acme.fromzeroapi.projects.domain.model.aggregates.Project;
 import com.acme.fromzeroapi.projects.interfaces.rest.resources.CreateProjectResource;
 

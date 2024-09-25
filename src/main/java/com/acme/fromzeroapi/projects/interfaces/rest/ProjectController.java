@@ -2,8 +2,8 @@ package com.acme.fromzeroapi.projects.interfaces.rest;
 
 import com.acme.fromzeroapi.projects.application.internal.outboundServices.acl.ExternalDeliverableService;
 import com.acme.fromzeroapi.projects.application.internal.outboundServices.acl.ExternalProfileProjectService;
-import com.acme.fromzeroapi.projects.domain.model.aggregates.Framework;
-import com.acme.fromzeroapi.projects.domain.model.aggregates.ProgrammingLanguage;
+import com.acme.fromzeroapi.projects.domain.model.entity.Framework;
+import com.acme.fromzeroapi.projects.domain.model.entity.ProgrammingLanguage;
 import com.acme.fromzeroapi.projects.domain.model.commands.AssignProjectDeveloperCommand;
 import com.acme.fromzeroapi.projects.domain.model.commands.CreateProjectCommand;
 import com.acme.fromzeroapi.projects.domain.model.commands.UpdateProjectCandidatesListCommand;

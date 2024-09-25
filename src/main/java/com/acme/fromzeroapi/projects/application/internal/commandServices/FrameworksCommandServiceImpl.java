@@ -1,6 +1,6 @@
 package com.acme.fromzeroapi.projects.application.internal.commandServices;
 
-import com.acme.fromzeroapi.projects.domain.model.aggregates.Framework;
+import com.acme.fromzeroapi.projects.domain.model.entity.Framework;
 import com.acme.fromzeroapi.projects.domain.model.commands.SeedFrameworks;
 import com.acme.fromzeroapi.projects.domain.model.valueObjects.Frameworks;
 import com.acme.fromzeroapi.projects.domain.services.FrameworksCommandService;
